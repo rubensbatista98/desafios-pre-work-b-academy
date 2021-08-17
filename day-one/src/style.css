@@ -8,3 +8,52 @@ body {
 
   margin-top: 60px;
 }
+
+.app {
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
+.app.-hide {
+  opacity: 0;
+}
+
+.link {
+  --link-color: hsl(345 100% 60%);
+
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: var(--link-color);
+
+  outline-offset: 10px;
+  outline: none;
+
+  display: inline-block;
+  margin-block-start: 20px;
+  position: relative;
+}
+.link:focus-visible {
+  /* When receives focus by keyboard */
+  outline: 2px solid hsl(0 0% 0%);
+}
+.link::before {
+  content: "";
+
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+
+  inline-size: 100%;
+  block-size: 2px;
+
+  background-color: var(--link-color);
+
+  transform-origin: left;
+  transform: scaleX(0.1);
+
+  transition: transform 200ms ease-in-out;
+}
+.link:hover::before {
+  transform: scaleX(1);
+}
