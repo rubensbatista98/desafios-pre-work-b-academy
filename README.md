@@ -1,7 +1,6 @@
-# Desafios pré-work do B. Academy
+# Desafios do Pré-Work da B. Academy
 
-Os desafios estão separados por dia.
+Neste repostiório está as minhas resoluções dos desafios da semana de Pré-Work
+da [B. Academy](https://b-academy.brainn.co/).
 
-Todos os vídeos estão [no canal do Daciuk na Twitch](https://twitch.tv/fdaciuk), e ficarão disponíveis até o final do dia 22/08/2021.
-
-Para visualizar os vídeos da semana de pré-work, acesse o link acima, clique na aba "Videos" e encontre a playlist "Pré-work (Bootcamp React.js)". Todos os vídeos estarão disponíveis lá :D
+[Resolução do dia 01](./day-one/)
