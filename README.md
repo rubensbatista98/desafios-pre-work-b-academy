@@ -4,3 +4,5 @@ Neste repostiório está as minhas resoluções dos desafios da semana de Pré-W
 da [B. Academy](https://b-academy.brainn.co/).
 
 [Resolução do dia 01](./day-one/)
+
+[Resolução do dia 02](./day-two/)
