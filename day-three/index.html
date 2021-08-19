@@ -12,6 +12,27 @@
     </form>
 
     <section style="margin: 10px;" data-js="colors-section"></section>
+
+    <form data-js="cars-form">
+      <input type="url" name="image" placeholder="Imagem (URL)" data-js="image-input">
+      <input type="text" name="model" placeholder="Marca / Modelo" data-js="model-input">
+      <input type="number" name="year" placeholder="Ano" data-js="year-input">
+      <input type="text" name="plate" placeholder="Placa" data-js="plate-input">
+      <input type="color" name="color" placeholder="Cor" data-js="color-input">
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <table data-js="table" cellspacing="1">
+      <tr>
+        <th>Imagem(URL)</th>
+        <th>Modelo / Marca</th>
+        <th>Ano</th>
+        <th>Placa</th>
+        <th>Cor</th>
+      </tr>
+    </table>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
