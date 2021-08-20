@@ -7,6 +7,46 @@
     <title>Dia 4</title>
   </head>
   <body>
+    <div class="container">
+      <form data-js="form" class="form">
+        <div>
+          <input type="url" name="image" placeholder="Imagem (URL)" >
+        </div>
+
+        <div>
+          <input type="text" name="model" placeholder="Marca / Modelo" >
+        </div>
+
+        <div>
+          <input type="number" name="year" placeholder="Ano" >
+        </div>
+
+        <div>
+          <input type="text" name="plate" placeholder="Placa" >
+        </div>
+
+        <div>
+          <input type="color" name="color" placeholder="Cor" >
+        </div>
+
+        <button type="submit">Cadastrar</button>
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Imagem(URL)</th>
+            <th>Modelo / Marca</th>
+            <th>Ano</th>
+            <th>Placa</th>
+            <th>Cor</th>
+          </tr>
+        </thead>
+
+        <tbody data-js="table"></tbody>
+      </table>
+    </div>
+
     <script type="module" src="/main.js"></script>
   </body>
 </html>
