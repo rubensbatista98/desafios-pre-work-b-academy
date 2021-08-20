@@ -8,3 +8,5 @@ da [B. Academy](https://b-academy.brainn.co/).
 [Resolução do dia 02](./day-two/)
 
 [Resolução do dia 03](./day-three/)
+
+[Resolução do dia 04](./day-four/)
