@@ -73,3 +73,9 @@ td {
   text-align: center;
   padding: 10px;
 }
+
+.form .error-message {
+  display: inline-block;
+  color: #ba021a;
+  margin-top: 10px;
+}
