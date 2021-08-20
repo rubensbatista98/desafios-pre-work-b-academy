@@ -1,10 +1,21 @@
 import "./style.css";
 
-import { populateTable } from "./utils/populate-table";
-
-const CARS_API_URL = "http://localhost:3333/cars";
+import { getCars, deleteCar, createCar } from "./api";
 
 const $form = document.querySelector('[data-js="form"]');
+
+renderTable();
+
+function renderTable() {
+  getCars().then(populateTable);
+}
+
+function handleDeleteCar(plate) {
+  return async () => {
+    await deleteCar(plate);
+    renderTable();
+  };
+}
 
 $form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -33,47 +44,84 @@ $form.addEventListener("submit", (event) => {
     });
 });
 
-async function getCars() {
-  const response = await fetch(CARS_API_URL);
-  const data = await response.json();
+export function populateTable(cars) {
+  const $table = document.querySelector('[data-js="table"]');
+  const fragment = document.createDocumentFragment();
 
-  return data;
-}
+  $table.innerHTML = "";
 
-async function createCar(data) {
-  try {
-    const response = await fetch(CARS_API_URL, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  if (cars.length === 0) {
+    const $tr = document.createElement("tr");
+    const $td = document.createElement("td");
 
-    const responseData = await response.json();
+    $td.textContent = "Nenhum carro encontrado";
+    $td.setAttribute("colspan", 5);
 
-    if (response.ok) {
-      return responseData;
-    }
+    $tr.appendChild($td);
+    $table.appendChild($tr);
 
-    return Promise.reject({ message: responseData.message });
-  } catch (error) {
-    return { message: "Tivemos um erro inesperado. Tente novamente." };
+    return;
   }
-}
 
-export async function deleteCar(plate) {
-  await fetch(CARS_API_URL, {
-    method: "DELETE",
-    body: JSON.stringify({ plate }),
-    headers: {
-      "Content-Type": "application/json",
-    },
+  cars.forEach((car) => {
+    const $tr = document.createElement("tr");
+
+    const $tdImage = document.createElement("td");
+    const $tdModel = document.createElement("td");
+    const $tdYear = document.createElement("td");
+    const $tdPlate = document.createElement("td");
+    const $tdColor = document.createElement("td");
+    const $tdDelete = document.createElement("td");
+
+    $tdDelete.appendChild(createButton(handleDeleteCar(car.plate)));
+
+    $tdImage.appendChild(createImage(car.image));
+    $tdColor.appendChild(createColor(car.color));
+
+    $tdModel.textContent = car.brandModel;
+    $tdYear.textContent = car.year;
+    $tdPlate.textContent = car.plate;
+
+    $tr.appendChild($tdImage);
+    $tr.appendChild($tdModel);
+    $tr.appendChild($tdYear);
+    $tr.appendChild($tdPlate);
+    $tr.appendChild($tdColor);
+    $tr.appendChild($tdDelete);
+
+    fragment.appendChild($tr);
   });
+
+  $table.appendChild(fragment);
 }
 
-export function renderTable() {
-  getCars().then(populateTable);
+function createImage(src) {
+  const $image = document.createElement("img");
+
+  $image.src = src;
+  $image.width = 100;
+
+  return $image;
 }
 
-renderTable();
+function createColor(color) {
+  const $div = document.createElement("div");
+
+  $div.style = `
+    width: 100px;
+    height: 100px;
+    background-color: ${color};
+    margin: 0 auto;
+  `;
+
+  return $div;
+}
+
+function createButton(listener) {
+  const $button = document.createElement("button");
+
+  $button.textContent = "Excluir";
+  $button.addEventListener("click", listener);
+
+  return $button;
+}
