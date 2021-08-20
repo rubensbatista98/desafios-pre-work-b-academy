@@ -1,6 +1,10 @@
+import { deleteCar, renderTable } from "../main";
+
 export function populateTable(cars) {
   const $table = document.querySelector('[data-js="table"]');
   const fragment = document.createDocumentFragment();
+
+  $table.innerHTML = "";
 
   if (cars.length === 0) {
     const $tr = document.createElement("tr");
@@ -16,6 +20,11 @@ export function populateTable(cars) {
   }
 
   cars.forEach((car) => {
+    async function onClick() {
+      await deleteCar(car.plate);
+      renderTable();
+    }
+
     const $tr = document.createElement("tr");
 
     const $tdImage = document.createElement("td");
@@ -23,9 +32,13 @@ export function populateTable(cars) {
     const $tdYear = document.createElement("td");
     const $tdPlate = document.createElement("td");
     const $tdColor = document.createElement("td");
+    const $tdDelete = document.createElement("td");
+
+    $tdDelete.appendChild(createButton(onClick));
 
     $tdImage.appendChild(createImage(car.image));
     $tdColor.appendChild(createColor(car.color));
+
     $tdModel.textContent = car.brandModel;
     $tdYear.textContent = car.year;
     $tdPlate.textContent = car.plate;
@@ -35,6 +48,7 @@ export function populateTable(cars) {
     $tr.appendChild($tdYear);
     $tr.appendChild($tdPlate);
     $tr.appendChild($tdColor);
+    $tr.appendChild($tdDelete);
 
     fragment.appendChild($tr);
   });
@@ -62,4 +76,14 @@ function createColor(color) {
   `;
 
   return $div;
+}
+
+function createButton(listener) {
+  const $button = document.createElement("button");
+
+  $button.textContent = "Excluir";
+
+  $button.addEventListener("click", listener);
+
+  return $button;
 }

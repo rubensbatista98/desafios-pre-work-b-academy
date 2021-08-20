@@ -27,8 +27,7 @@ $form.addEventListener("submit", (event) => {
   $errorEl.textContent = "";
 
   createCar(cardData)
-    .then(() => getCars())
-    .then(populateTable)
+    .then(renderTable)
     .catch((error) => {
       $errorEl.textContent = error.message;
     });
@@ -63,4 +62,18 @@ async function createCar(data) {
   }
 }
 
-getCars().then(populateTable);
+export async function deleteCar(plate) {
+  await fetch(CARS_API_URL, {
+    method: "DELETE",
+    body: JSON.stringify({ plate }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+export function renderTable() {
+  getCars().then(populateTable);
+}
+
+renderTable();
