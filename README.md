@@ -11,4 +11,4 @@ da [B. Academy](https://b-academy.brainn.co/).
 
 [Resolução do dia 04](./day-four/)
 
-[Resolução do dia 04](./day-five/)
+[Resolução do dia 05](./day-five/)
