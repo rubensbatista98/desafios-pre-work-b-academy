@@ -21,7 +21,7 @@ type InputElements = {
   "brand-model": HTMLInputElement;
 };
 
-type Data = {
+type TableRowData = {
   image: string;
   brandModel: string;
   year: string;
@@ -68,10 +68,14 @@ function createColor(value: string) {
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  const form = e.target as HTMLFormElement;
   const getElement = getFormElement(e as FormEvent);
 
+  const image = getElement("image");
+
   const data = {
-    image: getElement("image").value,
+    image: image.value,
     brandModel: getElement("brand-model").value,
     year: getElement("year").value,
     plate: getElement("plate").value,
@@ -92,29 +96,31 @@ form.addEventListener("submit", async (e) => {
 
   createTableRow(data);
 
-  e.target?.reset();
-  getElement("image").focus();
+  form.reset();
+  image.focus();
 });
 
-type Element = {
-  type: "image" | "text" | "color";
-  value: string | { src: string; alt: string };
-};
-
-function createTableRow(data: Data) {
-  const elements: Array<Element> = [
+function createTableRow(data: TableRowData) {
+  const elements = [
     { type: "image", value: { src: data.image, alt: data.brandModel } },
     { type: "text", value: data.brandModel },
     { type: "text", value: data.year },
     { type: "text", value: data.plate },
     { type: "color", value: data.color },
-  ];
+  ] as const;
 
   const tr = document.createElement("tr");
   tr.dataset.plate = data.plate;
 
   elements.forEach((element) => {
-    const td = elementTypes[element.type](element.value);
+    let td;
+
+    if (element.type === "image") {
+      td = elementTypes.image(element.value);
+    } else {
+      td = elementTypes[element.type](element.value);
+    }
+
     tr.appendChild(td);
   });
 
@@ -130,8 +136,8 @@ function createTableRow(data: Data) {
 }
 
 const handleDelete: EventListener = async (e) => {
-  const button = e.target;
-  const plate = button?.dataset.plate;
+  const button = e.target as HTMLButtonElement;
+  const plate = button.dataset.plate;
 
   const result = await del(url, { plate });
 
